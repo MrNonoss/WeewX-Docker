@@ -1,8 +1,7 @@
 Heavily based on the ver great work of vinceskahan (https://github.com/vinceskahan/weewx-docker).
 
-#####################
-###--> GENESIS <--###
-#####################
+/#####################\
+|###--> GENESIS <--###|
 
 #### Docker implementation of weewx:
 #--> install from sources
@@ -10,17 +9,15 @@ Heavily based on the ver great work of vinceskahan (https://github.com/vinceskah
 #--> with neowx skin (https://github.com/neoground/neowx)
 #--> based on debian:stretch
 
-#########################
-###--> PREQUISITES <--###
-#########################
+/#########################\
+|###--> PREQUISITES <--###|
 
 #### You'll probably want to mount some files/directories to the container
 #--> Config file: /home/weewx/weewx.conf
 #--> Html: /home/weewx/public_html
 
-####################
-###--> HOW TO <--###
-####################
+/####################\
+|###--> HOW TO <--###|
 
 #### First, build the image
 #--> docker build -t weewx .
@@ -29,9 +26,8 @@ Heavily based on the ver great work of vinceskahan (https://github.com/vinceskah
 #($=config file on your computer)
 #($$=html directory on your computer)
 
-######################
-###--> VERSIONS <--###
-######################
+/######################\
+|###--> VERSIONS <--###|
 
 #--> weewx: 3.9.1
 #--> interceptor: 0.40

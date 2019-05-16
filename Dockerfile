@@ -2,8 +2,8 @@
 # Dockerfile for building Weewx system
 # With the interceptor driver and the neowx skin
 #
-#--> build via 'docker build -t weewx'
-#->> run via 'docker run -it weewx /home/weewx/bin/weewxd --daemon --pidfile=/var/run/weewx.pid /home/weewx/weewx.conf'
+#--> build via 'docker build -t weewx .'
+#->> run via 'docker run -d weewx /home/weewx/bin/weewxd --daemon --pidfile=/var/run/weewx.pid /home/weewx/weewx.conf'
 #
 # last modified:
 #     2019-0516 - First Commit
