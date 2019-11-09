@@ -2,11 +2,16 @@
 # Dockerfile for building Weewx system
 # With the interceptor driver and the neowx skin
 #
-#--> build via 'docker build -t weewx .'
-#->> run via 'docker run -d -v $weewx.conf:etc/weewx/weewx.conf -v $html:/var/www/html/weewx weewx'
+#---> git clone the repo
+#-->> build via 'docker build -t weewx .'
+#->>> modify the docker-compose.yml to your needs
+#>>>> run via 'docker-compose up
 #
 # last modified:
 #     2019-05-20 - First Commit
+#     2019-06-08 - Manage logs
+#     2019-11-03 - Change install with source and update to 3.9.2
+#	    2019-11-08 - Add docker compose with nginx and custom macvlan
 #
 #-------------------------------------------------------
 FROM debian:stretch
@@ -17,20 +22,30 @@ MAINTAINER Bruno BORDAS "bruno.bordas@gmx.com"
 #############################
 
 RUN apt-get update && apt-get full-upgrade -y \
-    && apt-get install curl wget rsyslog procps gnupg -y
+    && apt-get install python python-pil python-imaging python-configobj python-cheetah mysql-client python-mysqldb ftp python-dev python-pip curl wget rsyslog procps gnupg -y && pip install pyephem
 
-RUN wget -qO - http://weewx.com/keys.html | apt-key add - && wget -qO - http://weewx.com/apt/weewx.list | tee /etc/apt/sources.list.d/weewx.list \
-    && apt-get update && apt-get install weewx -y && apt-get clean autoclean && apt-get autoremove --yes && rm -rf /var/lib/{apt,dpkg,cache,log}
+#################
+# Install WeewX #
+#################
+
+RUN cd /tmp && wget http://weewx.com/downloads/weewx-3.9.2.tar.gz && tar xvfz weewx-3.9.2.tar.gz && cd weewx-3.9.2 && ./setup.py build && ./setup.py install --no-prompt
 
 ###################################
 # Download and Install Extentions #
 ###################################
 
 RUN cd /tmp && wget -O weewx-interceptor.zip https://github.com/matthewwall/weewx-interceptor/archive/master.zip && wget -O weewx-neowx.zip https://projects.neoground.com/neowx/download/latest \
-    && wee_extension --install weewx-interceptor.zip && wee_extension --install weewx-neowx.zip && wee_config --reconfigure --driver=user.interceptor --no-prompt
+    && /home/weewx/bin/wee_extension --install weewx-interceptor.zip && /home/weewx/bin/wee_extension --install weewx-neowx.zip && /home/weewx/bin/wee_config --reconfigure --driver=user.interceptor --no-prompt
+
+###################################
+# Download and Install Extentions #
+###################################
+
+ADD ${PWD}/src/skin.conf /home/weewx/skins/neowx/skin.conf
+ADD ${PWD}/src/daily.json.tmpl /home/weewx/skins/neowx/daily.json.tmpl
 
 #################
 # Execute Weewx #
 #################
 
-CMD ["weewxd","/etc/weewx/weewx.conf"]
+CMD ["/home/weewx/bin/weewxd","/home/weewx/weewx.conf"]
