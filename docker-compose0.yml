@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  weewx-core:
+    container_name: weewx-core
+    image: weewx
+    mac_address: xx:xx:xx:xx:xx:xx # change this
+    cap_add:
+      - NET_ADMIN
+    networks:
+      macvlan_macvlan_network:
+        ipv4_address: 192.168.x.x # change this
+    environment:
+      TZ: 'Europe/Paris'
+    volumes:
+      - ${PWD}/data/weewx.conf:/home/weewx/weewx.conf # change this
+      - ${PWD}/data/html/:/home/weewx/public_html/ # change this
+      - ${PWD}/data/archive:/home/weewx/archive/ # change this
+    restart: unless-stopped
+
+  weewx-web:
+    container_name: weewx-web
+    image: nginx:alpine
+    depends_on:
+      - weewx-core
+    cap_add:
+      - NET_ADMIN
+    network_mode: "service:weewx-core"
+    environment:
+      TZ: 'Europe/Paris'
+    volumes:
+      - ${PWD}/data/html/:/usr/share/nginx # change this
+      - ${PWD}/src/default:/etc/nginx/conf.d/default.conf
+    restart: unless-stopped
+
+networks:
+  macvlan_macvlan_network:
+    external: true
