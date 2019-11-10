@@ -25,7 +25,7 @@ services:
       - weewx-core
     cap_add:
       - NET_ADMIN
-    network_mode: "service:weewx-core"
+    network_mode: "host"
     environment:
       TZ: 'Europe/Paris'
     volumes:
