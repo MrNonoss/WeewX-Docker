@@ -22,7 +22,7 @@ I provide with a docker-compose, running two services:
 - weewx-web (an nginx web-server)
 
 You'll probably want to mount some files/directories inside the container to keep data, so adapt the docker-compose to your needs:
-- ${PWD}/data/weewx.conf:/home/weewx/weewx.conf
+- ${PWD}/data/weewx.conf:/home/weewx/weewx.conf # Be sure to review it if you switch from apt/deb install to sources
 - ${PWD}/data/html/:/home/weewx/public_html/
 - ${PWD}/data/archive:/home/weewx/archive/
 
