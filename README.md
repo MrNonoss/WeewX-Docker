@@ -1,4 +1,8 @@
 After hours of researches and many many tries, here is my version of weewx under docker.
+I use this with an Ambient Weather Station WS-2902 and a PiHole docker container (https://pi-hole.net/)
+
+I modified the /etc/hosts file of the PiHole so that my local dns forward all the data send to rtupdate.wunderground.com to my weewx-core. The line I have to add looks like: 192.168.X.X	rtupdate.wunderground.com weewx
+Where the IP is the one of the weewx-core I settle in the docker-compose file.
 
 With this, you'll get:
 - WeeX 3.9.2 installed from sources, with:
@@ -6,6 +10,8 @@ With this, you'll get:
 - The Interceptor driver (https://github.com/matthewwall/weewx-interceptor)
 - Installed in a docker Image based from Debian:stretch
 - With a custom macvlan driver for docker, in order to avoid IP/ports conflicts
+- weewx-core will listen on port 80 in the macvlan and retrieve the datas
+- weewx-web will listen on port 8080 in the regular network driver and will expose the weather in a nice nginx web page
 
 Since I use Home-Assistant at home (https://www.home-assistant.io), I tweaked the skin thanks to the community:
 https://community.home-assistant.io/t/weather-station-data/58489/12?u=mrnonoss
