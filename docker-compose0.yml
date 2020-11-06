@@ -4,18 +4,17 @@ services:
   weewx-core:
     container_name: weewx-core
     image: weewx
-    mac_address: xx:xx:xx:xx:xx:xx # change this
+    mac_address: d0:ca:ab:cd:ca:ca
     cap_add:
       - NET_ADMIN
     networks:
-      macvlan_macvlan_network:
-        ipv4_address: 192.168.x.x # change this
-    environment:
-      TZ: 'Europe/Paris'
+      pihole_pihole_network:
+        ipv4_address: 192.168.X.X
     volumes:
-      - ${PWD}/data/weewx.conf:/home/weewx/weewx.conf # change this
-      - ${PWD}/data/html/:/home/weewx/public_html/ # change this
-      - ${PWD}/data/archive:/home/weewx/archive/ # change this
+      - /etc/localtime:/etc/localtime:ro
+      - ${PWD}/data/weewx.conf:/home/weewx/weewx.conf
+      - ${PWD}/data/html/:/home/weewx/public_html/
+      - ${PWD}/data/archive:/home/weewx/archive/
     restart: unless-stopped
 
   weewx-web:
@@ -25,14 +24,14 @@ services:
       - weewx-core
     cap_add:
       - NET_ADMIN
-    network_mode: "host"
-    environment:
-      TZ: 'Europe/Paris'
     volumes:
-      - ${PWD}/data/html/:/usr/share/nginx # change this
+      - /etc/localtime:/etc/localtime:ro
+      - ${PWD}/data/html/:/usr/share/nginx
       - ${PWD}/src/default:/etc/nginx/conf.d/default.conf
     restart: unless-stopped
-
+    ports:
+      - "9999:9999"
+      
 networks:
-  macvlan_macvlan_network:
+  pihole_pihole_network:
     external: true
