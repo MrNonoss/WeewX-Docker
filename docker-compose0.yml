@@ -30,7 +30,7 @@ services:
       - ${PWD}/src/default:/etc/nginx/conf.d/default.conf
     restart: unless-stopped
     ports:
-      - "9999:9999"
+      - "8080:8080"
       
 networks:
   pihole_pihole_network:
