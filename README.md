@@ -1,3 +1,5 @@
+# UPDATE TO 4.2.0
+
 After hours of researches and many many tries, here is my version of weewx under docker.
 I use this with an Ambient Weather Station WS-2902 and a PiHole docker container (https://pi-hole.net/)
 
@@ -5,7 +7,7 @@ I modified the /etc/hosts file of the PiHole so that my local dns forward all th
 Where the IP is the one of the weewx-core I settle in the docker-compose file.
 
 With this, you'll get:
-- WeeX 3.9.2 installed from sources, with:
+- WeeX 4.2.0 installed from sources, with:
 - The Neowx theme (https://github.com/neoground/neowx)
 - The Interceptor driver (https://github.com/matthewwall/weewx-interceptor)
 - Installed in a docker Image based from Debian:stretch
@@ -37,3 +39,5 @@ cd .. && docker build -t weewx .
 docker-compose up
 
 Feel free to use it as ou like !
+
+PS: I uploaded an genuine weex.conf file to help.
