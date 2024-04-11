@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+  weewx-core:
+    build: .
+    environment:
+      - TZ='America/Chicago'
+    volumes:
+    #  WeeWx needs to know the local time of the server, hance mounting localtime as read only. 
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/weewx.conf:/home/weewx/weewx-data/weewx.conf
+      - ./data/neowx-material/skin.conf:/home/weewx/weewx-data/neowx-material/skin.conf
+      - ./data/JSON/skin.conf:/home/weewx/weewx-data/JSON/skin.conf
+      - ./data/JSON/weewx-homebridge.json.tmpl:/home/weewx/weewx-data/JSON/weewx-homebridge.json.tmpl
+      - ./data/archive:/home/weewx/weewx-data/archive
+    # restart: unless-stopped
