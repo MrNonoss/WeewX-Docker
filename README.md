@@ -3,7 +3,7 @@
 Based on https://github.com/MrNonoss/WeewX-Docker
 
 With this, you'll get:
-- [WeeX 5](https://github.com/weewx/weewx) installed from pip, with:
+[WeeWX 5](https://github.com/weewx/weewx) installed from pip, with:
 - The [Neowx-material theme](https://github.com/neoground/neowx-material)
 - The [MQTT Subscribe driver](https://github.com/bellrichm/WeeWX-MQTTSubscribe)
 - The [JSON Driver](https://github.com/teeks99/weewx-json), with a template for [homebridge-weather-plus](https://github.com/naofireblade/homebridge-weather-plus). 
