@@ -1,3 +1,4 @@
-weewx.conf*
-data*/*
-docker-compose.yml
+.history/
+data/archive/
+data/public_html/
+data/.DS_Store
