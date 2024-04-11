@@ -13,4 +13,5 @@ services:
       - ./data/JSON/skin.conf:/home/weewx/weewx-data/JSON/skin.conf
       - ./data/JSON/weewx-homebridge.json.tmpl:/home/weewx/weewx-data/JSON/weewx-homebridge.json.tmpl
       - ./data/archive:/home/weewx/weewx-data/archive
-    # restart: unless-stopped
+      - ./data/public_html:/home/weewx/weewx-data/public_html
+    restart: unless-stopped
