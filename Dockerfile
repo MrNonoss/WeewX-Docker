@@ -6,17 +6,18 @@ RUN apt-get update && apt-get install rsyslog gosu -y
 
 
 RUN useradd -ms /bin/bash weewx
+RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
 WORKDIR /home/weewx
 
-RUN gosu weewx weectl station create --no-prompt 
-RUN gosu weewx weectl extension install https://github.com/bellrichm/WeeWX-MQTTSubscribe/archive/refs/tags/v3.0.0-rc08.zip --yes
-RUN gosu weewx weectl extension install https://github.com/neoground/neowx-material/releases/download/1.11/neowx-material-1.11.zip --yes
-RUN gosu weewx weectl extension install https://github.com/teeks99/weewx-json/releases/download/v1.2/weewx-json_1.2.tar.gz --yes
-RUN gosu weewx weectl station reconfigure --no-prompt --no-backup
+RUN rsyslogd & gosu weewx weectl station create --no-prompt 
+RUN rsyslogd & gosu weewx weectl extension install https://github.com/bellrichm/WeeWX-MQTTSubscribe/archive/refs/tags/v3.0.0-rc08.zip --yes
+RUN rsyslogd & gosu weewx weectl extension install https://github.com/neoground/neowx-material/releases/download/1.11/neowx-material-1.11.zip --yes
+RUN rsyslogd & gosu weewx weectl extension install https://github.com/teeks99/weewx-json/releases/download/v1.2/weewx-json_1.2.tar.gz --yes
+RUN rsyslogd & gosu weewx weectl station reconfigure --no-prompt --no-backup
 
 COPY entry.sh /home/weewx/entry.sh
 
