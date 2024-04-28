@@ -1,8 +1,7 @@
-FROM python:3.10-bullseye
-
+FROM python:3.10-slim-bullseye 
 
 RUN pip install wheel paho-mqtt==2 weewx==5.0.2 ephem==4.1.5
-RUN apt-get update && apt-get install rsyslog gosu -y
+RUN apt-get update && apt-get install rsyslog gosu -y && rm -rf /var/lib/apt/lists/*
 
 
 RUN useradd -ms /bin/bash weewx
